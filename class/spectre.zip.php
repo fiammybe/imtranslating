@@ -7,10 +7,10 @@ define("SZIP_FILE",'file');
 define("SZIP_SAVE",'save');
 
 class spectreZip {
- var $zip;
- var $options;
+ public $zip;
+ public $options;
 
- function spectreZip($warn = true, $safe = true) {
+ public function __construct($warn = true, $safe = true) {
   $this->zip = new zipfile;
   $this->options['warn'] = $warn;
   $this->options['safe'] = $safe;

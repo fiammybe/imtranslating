@@ -1,34 +1,34 @@
 <?php
 
-if (!defined("XOOPS_ROOT_PATH")) {
-die("XOOPS root path not defined");
+if (!defined("ICMS_ROOT_PATH")) {
+    die("ICMS root path not defined");
 }
 
 define("_IMTRANSLATING_UPLOAD_PATH", ICMS_ROOT_PATH."/uploads/imtranslating");
 
 class ImtranslatingJob
 {
-	var $_errors = array();
-	var $_from_lang;
-	var $_to_lang;
-	var $_step;
-	var $_module;
-	var $_from_path;
-	var $_to_path;
-	var $_current_file;
-	var $_ref_lang_array;
-	var $_missing_const = array();
-	var $_fileset;
+	public $_errors = array();
+	public $_from_lang;
+	public $_to_lang;
+	public $_step;
+	public $_module;
+	public $_from_path;
+	public $_to_path;
+	public $_current_file;
+	public $_ref_lang_array;
+	public $_missing_const = array();
+	public $_fileset;
 
 
-	/*var $_from_lang_array = array();
-	var $_to_lang_array = array();
-	var $_need_translation_array = array();*/
+	/*public $_from_lang_array = array();
+	public $_to_lang_array = array();
+	public $_need_translation_array = array();*/
 
 	/**
 	* constructor
 	*/
-	function ImtranslatingJob($from_lang = '', $to_lang = '', $module = 'core', $step = 0, $fileset = 'default')
+	public function __construct($from_lang = '', $to_lang = '', $module = 'core', $step = 0, $fileset = 'default')
 	{
 		$this->_from_lang = $from_lang;
 		$this->_to_lang = $to_lang;
@@ -39,8 +39,8 @@ class ImtranslatingJob
 
 	}
 
-	function getInitialForm(){
-		$form = new XoopsThemeForm(_AM_IMTRANSL_JOB, "job_form", xoops_getenv('PHP_SELF'));
+	public function getInitialForm(){
+		$form = new XoopsThemeForm(_AM_IMTRANSL_JOB, "job_form", $_SERVER['PHP_SELF']);
 
 		$lang_from_select = new XoopsFormSelect(_AM_IMTRANSL_FROM_LANG, "from_lang", $this->_from_lang);
 		$lang_from_select->addOptionArray($this->getLangArray());
@@ -72,7 +72,7 @@ class ImtranslatingJob
 	}
 
 	private function  getModuleArray(){
-		$module_handler =& xoops_gethandler('module');
+		$module_handler = icms::handler('module');
         $list = $module_handler->getList(null, true);
         $ret['core'] = _AM_IMTRANSL_COREFILES;
         foreach($list as $key => $mod){
@@ -184,7 +184,7 @@ class ImtranslatingJob
 		$translating_info = sprintf(_AM_IMTRANSL_JOB_INFO, $this->_current_file);
 		$icmsAdminTpl->assign('translating_info', $translating_info);
 		$icmsAdminTpl->assign('translating_title', $translating_title);
-		$form = new XoopsThemeForm($translating_title, "translation_form", xoops_getenv('PHP_SELF'));
+		$form = new XoopsThemeForm($translating_title, "translation_form", $_SERVER['PHP_SELF']);
 
 		foreach($this->_missing_const as $const){
 			$form->addElement(new XoopsFormLabel($const, $this->_ref_lang_array[$const]));
@@ -212,7 +212,7 @@ class ImtranslatingJob
 	}
 
 	function getFinishForm(){
-		$form = new XoopsThemeForm(_AM_IMTRANSL_DONE, "finish_form", xoops_getenv('PHP_SELF'));
+		$form = new XoopsThemeForm(_AM_IMTRANSL_DONE, "finish_form", $_SERVER['PHP_SELF']);
 
 		$button_tray = new XoopsFormElementTray('', '');
 		$form->addElement(new XoopsFormHidden('from_lang', $this->_from_lang));
@@ -234,7 +234,6 @@ class ImtranslatingJob
 
 
 	private function parse_from_lang_files(){
-		$myts =& MyTextSanitizer::getInstance();
 		$raw_langfile = file($this->_from_path.$this->_current_file);
 		$langfile_array = array();
 		foreach($raw_langfile as $key =>$line){
@@ -285,7 +284,7 @@ class ImtranslatingJob
 					$i++;
 				}
 				$line = substr($line, $i);
-				$langfile_array[$const_name] = $myts->htmlSpecialChars(strrev($line));
+				$langfile_array[$const_name] = htmlspecialchars(strrev($line), ENT_QUOTES, 'UTF-8');
 			}
 		}
 		return $langfile_array;
@@ -342,7 +341,6 @@ class ImtranslatingJob
 	}
 
 	function write(){
-		$myts =& MyTextSanitizer::getInstance();
 		$old_version_path = $this->_to_path."/";
 		$new_version_path = _IMTRANSLATING_UPLOAD_PATH.str_replace(ICMS_ROOT_PATH, '', $this->_to_path);
 		$filename = $this->getFileName($_POST['step']-1);
@@ -401,7 +399,7 @@ class ImtranslatingJob
 			}
 			foreach($_POST as $def => $value){
 				if(!in_array($def, array('step', 'module', 'to_lang', 'from_lang', 'fileset', 'write')) && $value != ''){
-					fwrite($newfile, 'define("'.$def.'", "'.$myts->undoHtmlSpecialChars(utf8_decode($value)).'");'."\r\n");
+					fwrite($newfile, 'define("'.$def.'", "'.addslashes(htmlspecialchars_decode($value, ENT_QUOTES)).'");'."\r\n");
 
 				}
 			}

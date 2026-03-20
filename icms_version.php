@@ -17,7 +17,7 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
  * General Information
  */
 $modversion['name'] = _MI_IMTRANSLATING_MD_NAME;
-$modversion['version'] = 1.0;
+$modversion['version'] = 1.1;
 $modversion['description'] = _MI_IMTRANSLATING_MD_DESC;
 $modversion['author'] = "The SmartFactory";
 $modversion['credits'] = "INBOX International inc.";
@@ -25,6 +25,8 @@ $modversion['help'] = "";
 $modversion['license'] = "GNU General Public License (GPL)";
 $modversion['official'] = 0;
 $modversion['dirname'] = "imtranslating";
+$modversion['min_php'] = '8.0';
+$modversion['min_icms'] = '2.0.1';
 
 /**
  * Images information

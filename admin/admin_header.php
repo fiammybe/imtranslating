@@ -8,13 +8,10 @@
 */
 
 if (!defined("IMTRANSLATING_NOCPFUNC")) {
-	include_once '../../../include/cp_header.php';
+	include_once ICMS_ROOT_PATH . '/include/cp_header.php';
 }
 
-include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-include_once XOOPS_ROOT_PATH . '/class/template.php';
-
-include_once XOOPS_ROOT_PATH.'/modules/imtranslating/include/common.php';
+include_once ICMS_ROOT_PATH.'/modules/imtranslating/include/common.php';
 
 if( !defined("IMTRANSLATING_ADMIN_URL") ){
 	define('IMTRANSLATING_ADMIN_URL', IMTRANSLATING_URL . "admin/");
