@@ -15,7 +15,6 @@ if (!defined("ICMS_ROOT_PATH")) die("Не определен корневой п
 // Module Info
 // The name of this module
 
-global $xoopsModule;
 define("_MI_IMTRANSLATING_MD_NAME", "imTranslating");
 define("_MI_IMTRANSLATING_MD_DESC", "Управление переводом констант в ImpressCMS");
 

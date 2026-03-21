@@ -15,7 +15,6 @@ if (!defined("ICMS_ROOT_PATH")) die("Caminho Raiz do ImpressCMS não está defin
 // Module Info
 // The name of this module
 
-global $xoopsModule;
 define("_MI_IMTRANSLATING_MD_NAME", "imTranslating");
 define("_MI_IMTRANSLATING_MD_DESC", "Gerenciador de registro e Eventos do ImpressCMS ");
 

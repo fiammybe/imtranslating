@@ -44,8 +44,6 @@ if(is_object($imtranslatingModule)){
 $imtranslatingConfig = icms_getModuleConfig(IMTRANSLATING_DIRNAME);
 
 include_once(IMTRANSLATING_ROOT_PATH . 'class/job.php');
-include_once(IMTRANSLATING_ROOT_PATH . 'class/spectre.zip.php');
-include_once IMTRANSLATING_ROOT_PATH . 'include/zip.lib.php';
 
 
 ?>

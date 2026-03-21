@@ -40,29 +40,29 @@ class ImtranslatingJob
 	}
 
 	public function getInitialForm(){
-		$form = new XoopsThemeForm(_AM_IMTRANSL_JOB, "job_form", $_SERVER['PHP_SELF']);
+		$form = new icms_form_Theme(_AM_IMTRANSL_JOB, "job_form", $_SERVER['PHP_SELF']);
 
-		$lang_from_select = new XoopsFormSelect(_AM_IMTRANSL_FROM_LANG, "from_lang", $this->_from_lang);
+		$lang_from_select = new icms_form_elements_Select(_AM_IMTRANSL_FROM_LANG, "from_lang", $this->_from_lang);
 		$lang_from_select->addOptionArray($this->getLangArray());
 		$form->addElement($lang_from_select);
 
-		$lang_to_select = new XoopsFormSelect(_AM_IMTRANSL_TO_LANG, "to_lang", $this->_to_lang);
+		$lang_to_select = new icms_form_elements_Select(_AM_IMTRANSL_TO_LANG, "to_lang", $this->_to_lang);
 		$lang_to_select->addOptionArray($this->getLangArray());
 		$form->addElement($lang_to_select);
 
-		$module_select = new XoopsFormSelect(_AM_IMTRANSL_MODULE, "module", $this->_module);
+		$module_select = new icms_form_elements_Select(_AM_IMTRANSL_MODULE, "module", $this->_module);
 		$module_select->addOptionArray($this->getModuleArray());
 		$form->addElement($module_select);
 
-		$form->addElement(new XoopsFormHidden('step', 0));
-		$form->addElement(new XoopsFormHidden('fileset', 'default'));
+		$form->addElement(new icms_form_elements_Hidden('step', 0));
+		$form->addElement(new icms_form_elements_Hidden('fileset', 'default'));
 
-		$button_tray = new XoopsFormElementTray('', '');
+		$button_tray = new icms_form_elements_Tray('', '');
 
-		$butt_create = new XoopsFormButton('', '', _AM_IMTRANSL_GO, 'submit');
+		$butt_create = new icms_form_elements_Button('', '', _AM_IMTRANSL_GO, 'submit');
 		$button_tray->addElement($butt_create);
 
-		$butt_cancel = new XoopsFormButton('', '', _AM_IMTRANSL_CANCEL, 'button');
+		$butt_cancel = new icms_form_elements_Button('', '', _AM_IMTRANSL_CANCEL, 'button');
 		$butt_cancel->setExtra('onclick="history.go(-1)"');
 		$button_tray->addElement($butt_cancel);
 
@@ -184,25 +184,25 @@ class ImtranslatingJob
 		$translating_info = sprintf(_AM_IMTRANSL_JOB_INFO, $this->_current_file);
 		$icmsAdminTpl->assign('translating_info', $translating_info);
 		$icmsAdminTpl->assign('translating_title', $translating_title);
-		$form = new XoopsThemeForm($translating_title, "translation_form", $_SERVER['PHP_SELF']);
+		$form = new icms_form_Theme($translating_title, "translation_form", $_SERVER['PHP_SELF']);
 
 		foreach($this->_missing_const as $const){
-			$form->addElement(new XoopsFormLabel($const, $this->_ref_lang_array[$const]));
-			$form->addElement(new XoopsFormTextArea(_AM_IMTRANSL_TRANSLATION, $const));
+			$form->addElement(new icms_form_elements_Label($const, $this->_ref_lang_array[$const]));
+			$form->addElement(new icms_form_elements_Textarea(_AM_IMTRANSL_TRANSLATION, $const));
 		}
 
-		$form->addElement(new XoopsFormHidden('from_lang', $this->_from_lang));
-		$form->addElement(new XoopsFormHidden('to_lang', $this->_to_lang));
-		$form->addElement(new XoopsFormHidden('module', $this->_module));
-		$form->addElement(new XoopsFormHidden('step', $this->_step+1));
-		$form->addElement(new XoopsFormHidden('fileset', $this->_fileset));
-		$form->addElement(new XoopsFormHidden('write', 1));
-		$button_tray = new XoopsFormElementTray('', '');
+		$form->addElement(new icms_form_elements_Hidden('from_lang', $this->_from_lang));
+		$form->addElement(new icms_form_elements_Hidden('to_lang', $this->_to_lang));
+		$form->addElement(new icms_form_elements_Hidden('module', $this->_module));
+		$form->addElement(new icms_form_elements_Hidden('step', $this->_step+1));
+		$form->addElement(new icms_form_elements_Hidden('fileset', $this->_fileset));
+		$form->addElement(new icms_form_elements_Hidden('write', 1));
+		$button_tray = new icms_form_elements_Tray('', '');
 
-		$butt_create = new XoopsFormButton('', '', _AM_IMTRANSL_GO, 'submit');
+		$butt_create = new icms_form_elements_Button('', '', _AM_IMTRANSL_GO, 'submit');
 		$button_tray->addElement($butt_create);
 
-		$butt_cancel = new XoopsFormButton('', '', _AM_IMTRANSL_CANCEL, 'button');
+		$butt_cancel = new icms_form_elements_Button('', '', _AM_IMTRANSL_CANCEL, 'button');
 		$butt_cancel->setExtra('onclick="location=\'index.php\'"');
 		$button_tray->addElement($butt_cancel);
 
@@ -212,18 +212,18 @@ class ImtranslatingJob
 	}
 
 	function getFinishForm(){
-		$form = new XoopsThemeForm(_AM_IMTRANSL_DONE, "finish_form", $_SERVER['PHP_SELF']);
+		$form = new icms_form_Theme(_AM_IMTRANSL_DONE, "finish_form", $_SERVER['PHP_SELF']);
 
-		$button_tray = new XoopsFormElementTray('', '');
-		$form->addElement(new XoopsFormHidden('from_lang', $this->_from_lang));
-		$form->addElement(new XoopsFormHidden('to_lang', $this->_to_lang));
-		$form->addElement(new XoopsFormHidden('module', $this->_module));
+		$button_tray = new icms_form_elements_Tray('', '');
+		$form->addElement(new icms_form_elements_Hidden('from_lang', $this->_from_lang));
+		$form->addElement(new icms_form_elements_Hidden('to_lang', $this->_to_lang));
+		$form->addElement(new icms_form_elements_Hidden('module', $this->_module));
 
-		$form->addElement(new XoopsFormHidden('step', 'zip'));
-		$butt_create = new XoopsFormButton('', '', _AM_IMTRANSL_ZIP, 'submit');
+		$form->addElement(new icms_form_elements_Hidden('step', 'zip'));
+		$butt_create = new icms_form_elements_Button('', '', _AM_IMTRANSL_ZIP, 'submit');
 		$button_tray->addElement($butt_create);
 
-		$butt_cancel = new XoopsFormButton('', '', _AM_IMTRANSL_CANCEL, 'button');
+		$butt_cancel = new icms_form_elements_Button('', '', _AM_IMTRANSL_CANCEL, 'button');
 		$butt_cancel->setExtra('onclick="location=\'index.php\'"');
 		$button_tray->addElement($butt_cancel);
 
@@ -424,12 +424,37 @@ class ImtranslatingJob
 	}
 
 	function makeZip(){
-		$zipper = new spectreZip();
-		/*foreach(scandir(_IMTRANSLATING_UPLOAD_PATH.$this->_to_lang."/") as $file){
-			$zipper->addFile(_IMTRANSLATING_UPLOAD_PATH.$this->_to_lang."/".$file);
-		}*/
-		$zipper->addDir(_IMTRANSLATING_UPLOAD_PATH."/");
-		$zipper->render('imtranslating.zip');
+		$zipPath = sys_get_temp_dir() . '/imtranslating_' . time() . '.zip';
+		$zip = new ZipArchive();
+		$result = $zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+		if ($result !== true) {
+			exit('Cannot create zip archive (error code: ' . $result . ')');
+		}
+		try {
+			$uploadPath = _IMTRANSLATING_UPLOAD_PATH . '/';
+			if (is_dir($uploadPath)) {
+				$iterator = new RecursiveIteratorIterator(
+					new RecursiveDirectoryIterator($uploadPath, RecursiveDirectoryIterator::SKIP_DOTS),
+					RecursiveIteratorIterator::LEAVES_ONLY
+				);
+				foreach ($iterator as $file) {
+					if (!$file->isDir()) {
+						$filePath = $file->getRealPath();
+						$relativePath = substr($filePath, strlen($uploadPath));
+						$zip->addFile($filePath, $relativePath);
+					}
+				}
+			}
+			$zip->close();
+			header('Content-Type: application/zip');
+			header('Content-Disposition: attachment; filename="imtranslating.zip"');
+			header('Content-Length: ' . filesize($zipPath));
+			readfile($zipPath);
+		} finally {
+			if (file_exists($zipPath)) {
+				unlink($zipPath);
+			}
+		}
 	}
 
 }
