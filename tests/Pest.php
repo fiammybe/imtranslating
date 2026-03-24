@@ -11,31 +11,6 @@
 // ── Shared helpers ─────────────────────────────────────────────────────────
 
 /**
- * Construct and initialise an ImtranslatingJob.
- *
- * In PHP 8 the old-style constructor (method named the same as the class)
- * is no longer called automatically by `new`.  This helper creates the
- * object and then explicitly calls the initialisation method so all
- * properties — including the path pair set by setPath() — are populated
- * before assertions run.
- */
-function make_job(
-    string $fromLang = '',
-    string $toLang   = '',
-    string $module   = 'core',
-    int    $step     = 0,
-    string $fileset  = 'default'
-): ImtranslatingJob {
-    $job = new ImtranslatingJob();
-    // Bypass the PHP-8 old-style-constructor behaviour by invoking the
-    // method directly; it sets all instance properties and calls setPath().
-    $job->ImtranslatingJob($fromLang, $toLang, $module, $step, $fileset);
-
-    return $job;
-}
-
-
-/**
  * Create a minimal PHP language-file under $dir/$filename with the
  * given constant definitions and return the full path.
  *
