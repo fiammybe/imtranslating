@@ -1,0 +1,5 @@
+# Composer dependencies
+/vendor/
+
+# Composer lock file (not required for a module library)
+composer.lock
