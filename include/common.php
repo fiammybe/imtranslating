@@ -6,8 +6,8 @@
 * Author: The SmartFactory <www.smartfactory.ca>
 * Licence: GNU
 */
-if (!defined("XOOPS_ROOT_PATH")) {
- 	die("XOOPS root path not defined");
+if (!defined("ICMS_ROOT_PATH")) {
+ 	die("ICMS root path not defined");
 }
 
 if( !defined("IMTRANSLATING_DIRNAME") ){
@@ -36,7 +36,6 @@ $imtranslatingModule = icms_getModuleInfo(IMTRANSLATING_DIRNAME);
 // Find if the user is admin of the module
 $imtranslating_isAdmin = icms_userIsAdmin(IMTRANSLATING_DIRNAME);
 
-$myts = MyTextSanitizer::getInstance();
 if(is_object($imtranslatingModule)){
 	$imtranslating_moduleName = $imtranslatingModule->getVar('name');
 }
@@ -44,15 +43,7 @@ if(is_object($imtranslatingModule)){
 // Creating the SmartModule config Object
 $imtranslatingConfig = icms_getModuleConfig(IMTRANSLATING_DIRNAME);
 
-include_once ICMS_ROOT_PATH."/kernel/icmspersistableobject.php";
-
 include_once(IMTRANSLATING_ROOT_PATH . 'class/job.php');
-include_once(IMTRANSLATING_ROOT_PATH . 'class/spectre.zip.php');
-include 'zip.lib.php';
-
-
-global $icmsPersistableRegistry;
-$icmsPersistableRegistry = IcmsPersistableRegistry::getInstance();
 
 
 ?>

@@ -15,7 +15,6 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 // Module Info
 // The name of this module
 
-global $xoopsModule;
 define("_MI_IMTRANSLATING_MD_NAME", "imTranslating");
 define("_MI_IMTRANSLATING_MD_DESC", "Translation management mdoule for ImpressCMS");
 
