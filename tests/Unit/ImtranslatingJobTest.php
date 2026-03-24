@@ -6,47 +6,41 @@
  * These tests exercise the class in isolation.  All filesystem interaction
  * is confined to a temporary directory tree under ICMS_ROOT_PATH, so no
  * real ImpressCMS installation is needed.
- *
- * Note on PHP 8 old-style constructors:
- *   In PHP 8 a method whose name matches the class name is no longer treated
- *   as a constructor.  `new ImtranslatingJob(...)` therefore does NOT invoke
- *   the ImtranslatingJob() method.  We use the make_job() helper (defined in
- *   tests/Pest.php) which calls that method explicitly after construction.
  */
 
 // ── Path resolution ────────────────────────────────────────────────────────
 
 describe('setPath()', function () {
     it('resolves core/default paths from ICMS_ROOT_PATH and language names', function () {
-        $job = make_job('english', 'french', 'core', 0, 'default');
+        $job = new ImtranslatingJob('english', 'french', 'core', 0, 'default');
 
         expect($job->_from_path)->toBe(ICMS_ROOT_PATH . '/language/english/');
         expect($job->_to_path)->toBe(ICMS_ROOT_PATH . '/language/french/');
     });
 
     it('resolves core/install paths', function () {
-        $job = make_job('english', 'french', 'core', 0, 'install');
+        $job = new ImtranslatingJob('english', 'french', 'core', 0, 'install');
 
         expect($job->_from_path)->toBe(ICMS_ROOT_PATH . '/install/language/english/');
         expect($job->_to_path)->toBe(ICMS_ROOT_PATH . '/install/language/french/');
     });
 
     it('resolves core/system paths', function () {
-        $job = make_job('english', 'french', 'core', 0, 'system');
+        $job = new ImtranslatingJob('english', 'french', 'core', 0, 'system');
 
         expect($job->_from_path)->toBe(ICMS_ROOT_PATH . '/modules/system/language/english/');
         expect($job->_to_path)->toBe(ICMS_ROOT_PATH . '/modules/system/language/french/');
     });
 
     it('resolves core/system/admin paths', function () {
-        $job = make_job('english', 'french', 'core', 0, 'system/admin');
+        $job = new ImtranslatingJob('english', 'french', 'core', 0, 'system/admin');
 
         expect($job->_from_path)->toBe(ICMS_ROOT_PATH . '/modules/system/language/english/admin/');
         expect($job->_to_path)->toBe(ICMS_ROOT_PATH . '/modules/system/language/french/admin/');
     });
 
     it('resolves module (non-core) paths', function () {
-        $job = make_job('english', 'french', 'mymodule', 0, 'default');
+        $job = new ImtranslatingJob('english', 'french', 'mymodule', 0, 'default');
 
         expect($job->_from_path)->toBe(ICMS_ROOT_PATH . '/modules/mymodule/language/english/');
         expect($job->_to_path)->toBe(ICMS_ROOT_PATH . '/modules/mymodule/language/french/');
@@ -58,13 +52,13 @@ describe('setPath()', function () {
 describe('getFileName()', function () {
     beforeEach(function () {
         // Place fixture files under ICMS_ROOT_PATH so the path helper
-        // make_job() resolves them naturally (no manual _from_path override).
+        // resolves them naturally (no manual _from_path override).
         $this->langFrom = ICMS_ROOT_PATH . '/language/english_getfilename_' . uniqid();
         mkdir($this->langFrom, 0777, true);
         make_lang_file($this->langFrom, 'admin.php',   ['CONST_A' => 'Hello']);
         make_lang_file($this->langFrom, 'modinfo.php', ['CONST_B' => 'World']);
 
-        $this->job = make_job();
+        $this->job = new ImtranslatingJob();
         // Override _from_path so getFileName() scans our fixture directory.
         $this->job->_from_path = $this->langFrom . '/';
     });
@@ -117,8 +111,8 @@ describe('write()', function () {
             mkdir(_IMTRANSLATING_UPLOAD_PATH, 0777, true);
         }
 
-        // make_job() sets _from_path / _to_path / _to_lang automatically.
-        $this->job = make_job('english', 'french', 'core', 1, 'default');
+        // new ImtranslatingJob() sets _from_path / _to_path / _to_lang automatically.
+        $this->job = new ImtranslatingJob('english', 'french', 'core', 1, 'default');
 
         // Simulate the POST data that write() reads internally.
         $_POST = [
